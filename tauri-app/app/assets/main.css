@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  prefix: "du-";
+  logs: false;
+}
+
+@font-face {
+  font-family: "Happy Monkey";
+  src: url("/fonts/HappyMonkey-Regular.ttf") format("truetype");
+}
+
+* {
+  font-family: "Happy Monkey";
+}
+
+html {
+  overscroll-behavior-y: contain;
+}
+body {
+  overscroll-behavior-y: contain;
+  @apply min-h-screen overflow-x-hidden;
+}
+
+button,
+input[type="button"],
+div[role="button"],
+a {
+  touch-action: manipulation;
+  @apply cursor-pointer transition select-none;
+}
+img {
+  @apply select-none;
+}
+input {
+  @apply placeholder:select-none;
+}
+
+button[disabled],
+input[type="button"][disabled],
+div[role="button"][disabled],
+a[disabled] {
+  @apply cursor-not-allowed!;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button {
+  @apply appearance-none;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
