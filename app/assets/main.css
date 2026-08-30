@@ -15,6 +15,12 @@
 
 html {
   overscroll-behavior-y: contain;
+  background-color: #f5fcff;
+}
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #17252b;
+  }
 }
 body {
   overscroll-behavior-y: contain;

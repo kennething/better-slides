@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Slide Remote</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        touch-action: manipulation;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        margin: 0;
+        background: #121212;
+        font-family:
+          "Comic Sans MS",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+
+      .status {
+        padding: 0.75rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #ff0000;
+      }
+      .status.connected {
+        color: #2eff62;
+      }
+
+      .controls {
+        display: flex;
+        flex: 1;
+        gap: 0.5rem;
+      }
+
+      button {
+        flex: 1;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        cursor: pointer;
+        user-select: none;
+      }
+      #prev {
+        background: #294554;
+      }
+      #next {
+        background: #56b6ff;
+      }
+
+      img {
+        border-radius: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status" class="status">Disconnected</div>
+    <div class="controls">
+      <button id="prev">◀ Back</button>
+      <button id="next">Next ▶</button>
+    </div>
+    <img src="https://cdn.kennethng.dev/big-rat-monster.png" draggable="false" aria-hidden="true" alt="" />
+
+    <script>
+      const socket = io();
+
+      const statusEl = document.getElementById("status");
+      socket.on("connect", () => {
+        statusEl.textContent = "Connected";
+        statusEl.classList.add("connected");
+      });
+      socket.on("disconnect", () => {
+        statusEl.textContent = "Disconnected";
+        statusEl.classList.remove("connected");
+      });
+
+      document.getElementById("prev").addEventListener("click", () => socket.emit("slide-control", "PREV"));
+      document.getElementById("next").addEventListener("click", () => socket.emit("slide-control", "NEXT"));
+    </script>
+  </body>
+</html>
