@@ -4,13 +4,8 @@
   logs: false;
 }
 
-@font-face {
-  font-family: "Happy Monkey";
-  src: url("/fonts/HappyMonkey-Regular.ttf") format("truetype");
-}
-
 * {
-  font-family: "Happy Monkey";
+  font-family: "Comic Sans MS";
 }
 
 html {

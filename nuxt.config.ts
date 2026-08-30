@@ -21,15 +21,15 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Mobile Clicker",
+      title: "Better Slides",
       meta: [
         { charset: "UTF-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1.0" },
         { name: "mobile-web-app-capable", content: "yes" },
         { name: "author", content: "Kenneth Ng" },
-        { property: "og:title", content: "Mobile Clicker" },
-        { property: "og:site_name", content: "Mobile Clicker" }
-      ],
+        { property: "og:title", content: "Better Slides" },
+        { property: "og:site_name", content: "Better Slides" }
+      ]
     }
   }
 });

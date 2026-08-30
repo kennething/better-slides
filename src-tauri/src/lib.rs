@@ -6,7 +6,7 @@ use axum::{ routing::get, response::Html, Router };
 use tower_http::cors::CorsLayer;
 use tokio::net::TcpListener;
 use std::sync::Mutex;
-use tauri::{ State, Manager, AppHandle };
+use tauri::{ State, Manager, AppHandle, Emitter };
 
 struct ServerState {
   port: Mutex<u16>,
@@ -28,15 +28,20 @@ fn trigger_slide_action(action: &str) {
   }
 }
 
-async fn start_server(app_handle: tauri::AppHandle) {
+async fn start_server(app_handle: AppHandle) {
   let (layer, io) = SocketIo::new_layer();
 
-  io.ns("/", |socket: SocketRef| {
-    println!("Client connected: {:?}", socket.id);
+  let connect_app_handle: AppHandle = app_handle.clone();
+  io.ns("/", move |socket: SocketRef| {
+    connect_app_handle.emit("connected", ()).unwrap();
 
     socket.on("slide-control", |_socket: SocketRef, Data::<String>(action)| {
-      println!("Received slide action: {}", action);
       trigger_slide_action(&action);
+    });
+
+    let disconnect_app_handle: AppHandle = connect_app_handle.clone();
+    socket.on_disconnect(move |_socket: SocketRef| {
+        disconnect_app_handle.emit("disconnected", ()).unwrap();
     });
   });
 
