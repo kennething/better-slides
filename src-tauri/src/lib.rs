@@ -1,12 +1,13 @@
-use local_ip_address::local_ip;
-
 use socketioxide::{ extract::{ Data, SocketRef }, SocketIo };
 use enigo::{ Direction, Enigo, Key, Keyboard, Settings };
 use axum::{ routing::get, response::Html, Router };
+use tauri::{ State, Manager, AppHandle, Emitter };
 use tower_http::cors::CorsLayer;
+use local_ip_address::local_ip;
 use tokio::net::TcpListener;
 use std::sync::Mutex;
-use tauri::{ State, Manager, AppHandle, Emitter };
+
+pub mod update;
 
 struct ServerState {
   port: Mutex<u16>,
@@ -41,7 +42,7 @@ async fn start_server(app_handle: AppHandle) {
 
     let disconnect_app_handle: AppHandle = connect_app_handle.clone();
     socket.on_disconnect(move |_socket: SocketRef| {
-        disconnect_app_handle.emit("disconnected", ()).unwrap();
+      disconnect_app_handle.emit("disconnected", ()).unwrap();
     });
   });
 
@@ -87,9 +88,16 @@ pub fn run() {
     .build(tauri::generate_context!())
     .expect("error while running tauri application");
 
-  let handle: AppHandle = app.handle().clone();
+  let start_server_handle: AppHandle = app.handle().clone();
   tauri::async_runtime::spawn(async move {
-    start_server(handle).await;
+    start_server(start_server_handle).await;
+  });
+
+  let update_handle: AppHandle = app.handle().clone();
+  tauri::async_runtime::spawn(async move {
+    if let Err(err) = update::check_for_update(update_handle).await {
+      eprintln!("Update check failed: {err}");
+    }
   });
 
   app.run(|_, _| {});

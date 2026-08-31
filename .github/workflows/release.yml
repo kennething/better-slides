@@ -43,13 +43,21 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Set version from Git tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          npm version "$VERSION" --no-git-tag-version
+          sed -i.bak "s/^version = \".*\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
+          rm -f src-tauri/Cargo.toml.bak
+
       - name: Build Tauri app & Publish to GitHub Release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_VERSION: ${{ github.ref_name }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "App ${{ github.ref_name }}"
+          releaseName: "${{ github.ref_name }}"
           releaseBody: "See the assets below to download the app for macOS and Windows."
           releaseDraft: true
           prerelease: false

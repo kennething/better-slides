@@ -3,6 +3,12 @@
   prefix: "du-";
   logs: false;
 }
+@theme {
+  --color-bg-light: #f5fcff;
+  --color-content-light: #294554;
+  --color-bg-dark: #17252b;
+  --color-content-dark: #eeeeee;
+}
 
 * {
   font-family: "Comic Sans MS";
@@ -10,12 +16,7 @@
 
 html {
   overscroll-behavior-y: contain;
-  background-color: #f5fcff;
-}
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: #17252b;
-  }
+  @apply bg-bg-light *:text-content-light dark:bg-bg-dark dark:*:text-content-dark;
 }
 body {
   overscroll-behavior-y: contain;

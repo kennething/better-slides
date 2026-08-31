@@ -2,5 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
+  dotenvy::dotenv().ok();
+  
   tauri_app_lib::run()
 }
