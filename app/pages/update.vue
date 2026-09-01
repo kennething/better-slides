@@ -8,24 +8,30 @@
     <p class="text-sm text-center text-neutral-700">{{ errorMessage }}</p>
   </div>
 
-  <div v-else-if="!update">
-    <p>u good</p>
+  <div v-else-if="!update" class="flex select-none flex-col items-center justify-center gap-2 p-10">
+    <h1 class="text-xl font-semibold">Up to date!</h1>
   </div>
 
-  <div v-else class="flex select-none flex-col items-center justify-center gap-2 px-7 py-3 rounded-xl">
-    <p class="text-xl font-semibold">Update available :3</p>
-    <p class="text-sm text-center text-neutral-700">Upgrade to {{ update.version }}</p>
+  <div v-else class="flex flex-col items-center justify-center p-10">
+    <h1 class="text-xl font-semibold">Update available :3</h1>
+    <p class="text-sm text-center text-neutral-700 dark:text-neutral-300">Version {{ update.version }}</p>
 
-    <div v-if="update.body">
+    <div class="my-4 pb-10" v-if="update.body">
+      <h1 class="text-lg font-semibold">What's new:</h1>
       {{ update.body }}
     </div>
 
-    <button :disabled="isInstalling" @click="installUpdate">
-      {{ isInstalling ? `Installing ${progress}%` : `Install ${update.version}` }}
-    </button>
+    <div class="fixed select-none bottom-10 left-1/2 -translate-x-1/2">
+      <div v-if="!isInstalling" class="du-aura du-aura-sm du-aura-rainbow">
+        <button class="bg-base-200 hover:bg-base-300 px-6 py-2 rounded-xl" @click="installUpdate">Install v{{ update.version }}</button>
+      </div>
 
-    <div v-if="isInstalling">
-      <progress :value="progress" max="100"></progress>
+      <div v-else class="flex items-center justify-center gap-2 mt-2">
+        <p class="shrink-0 font-light">{{ progress }}%</p>
+        <div class="w-60 h-4 rounded-full bg-base-content overflow-hidden relative">
+          <div class="h-full bg-sky-500 absolute top-0 left-0 transition duration-500" :style="{ width: `${progress}%` }"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,10 +40,12 @@
 import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 
+onMounted(() => document.documentElement.classList.add("bg-sky-200!", "dark:bg-sky-900!"));
+
 const update = ref<Awaited<ReturnType<typeof check>>>(null);
 const isChecking = ref(true);
 const isInstalling = ref(false);
-const progress = ref(0);
+const progress = ref(50);
 const errorMessage = ref("");
 
 onMounted(async () => {

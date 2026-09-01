@@ -7,7 +7,7 @@
 </mask>
 <g mask="url(#mask0_1_27)">
 <g filter="url(#filter0_f_1_27)">
-<path d="M4.51974 33.6506L31.1903 29.6646L26.6037 -1.02488L-0.0670166 2.96104L4.51974 33.6506Z" fill="#7B00FF"/>
+<path d="M4.51974 33.6506L31.1903 29.6646L26.6037 -1.02488L-0.0670166 2.96104L4.51974 33.6506Z" fill="#0095FF"/>
 <path d="M4.51974 33.6506L31.1903 29.6646L26.6037 -1.02488L-0.0670166 2.96104L4.51974 33.6506Z" fill="url(#paint2_linear_1_27)"/>
 </g>
 </g>
@@ -21,17 +21,17 @@
 <feGaussianBlur stdDeviation="1.10823" result="effect1_foregroundBlur_1_27"/>
 </filter>
 <linearGradient id="paint0_linear_1_27" x1="13.8158" y1="2.57482" x2="27.3232" y2="27.9809" gradientUnits="userSpaceOnUse">
-<stop offset="0.2" stop-color="#B70FFF"/>
-<stop offset="0.67" stop-color="#7B00FF"/>
+<stop offset="0.2" stop-color="#0F7FFF"/>
+<stop offset="0.67" stop-color="#0095FF"/>
 <stop offset="0.91" stop-color="#A8C2FF"/>
 </linearGradient>
 <linearGradient id="paint1_linear_1_27" x1="16.0194" y1="4.18729" x2="16.0194" y2="27.8294" gradientUnits="userSpaceOnUse">
-<stop stop-color="#7B00FF"/>
-<stop offset="1" stop-color="#9000FE"/>
+<stop stop-color="#0095FF"/>
+<stop offset="1" stop-color="#00A5FE"/>
 </linearGradient>
 <linearGradient id="paint2_linear_1_27" x1="18.3319" y1="29.3366" x2="13.7956" y2="2.94423" gradientUnits="userSpaceOnUse">
-<stop offset="0.07" stop-color="#EA49FF"/>
-<stop offset="0.78" stop-color="#7B00FF" stop-opacity="0"/>
+<stop offset="0.07" stop-color="#49ADFF"/>
+<stop offset="0.78" stop-color="#0095FF" stop-opacity="0"/>
 </linearGradient>
 <clipPath id="clip0_1_27">
 <rect width="31.0303" height="29.9217" fill="white" transform="translate(0.504272 1.04727)"/>

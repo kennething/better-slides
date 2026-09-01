@@ -16,7 +16,7 @@
 
 html {
   overscroll-behavior-y: contain;
-  @apply bg-bg-light *:text-content-light dark:bg-bg-dark dark:*:text-content-dark;
+  @apply bg-bg-light *:text-content-light dark:bg-bg-dark *:dark:text-content-dark;
 }
 body {
   overscroll-behavior-y: contain;

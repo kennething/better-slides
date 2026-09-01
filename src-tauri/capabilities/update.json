@@ -1,0 +1,5 @@
+{
+  "identifier": "updater-window",
+  "windows": ["update"],
+  "permissions": ["updater:default"]
+}

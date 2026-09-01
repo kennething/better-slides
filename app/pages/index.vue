@@ -7,19 +7,19 @@
       <div
         class="px-10 select-none py-4 flex items-center justify-center rounded-xl text-xl"
         :class="{
-          'bg-success': connectionState === ConnectionState.Connected,
-          'bg-error': connectionState === ConnectionState.Disconnected,
-          'bg-base-300 border-base-200 border-2': connectionState === ConnectionState.Init
+          'bg-success/75': connectionState === ConnectionState.Connected,
+          'bg-error/75': connectionState === ConnectionState.Disconnected,
+          'bg-base-300 border-base-200 dark:bg-neutral-600 dark:border-neutral-700 border-2': connectionState === ConnectionState.Init
         }"
       >
         {{ connectionState === ConnectionState.Connected ? "Connected!" : connectionState === ConnectionState.Disconnected ? "Disconnected" : "Idle..." }}
       </div>
     </div>
 
-    <div class="group">
+    <div class="group relative rounded-xl overflow-hidden">
       <div
-        class="absolute top-0 left-0 w-full h-full flex items-center justify-center transition-opacity duration-300"
-        :class="connectionState === ConnectionState.Init ? 'opacity-0' : 'backdrop-blur-xl group-hover:opacity-0'"
+        class="absolute top-0 left-0 z-1 w-full h-full flex items-center justify-center transition-opacity duration-300"
+        :class="connectionState === ConnectionState.Init ? 'opacity-0' : 'backdrop-blur-md group-hover:opacity-0'"
       >
         <p class="text-xl font-medium text-white">Hover to reveal</p>
       </div>
