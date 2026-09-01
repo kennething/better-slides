@@ -78,6 +78,7 @@ fn get_server_url(state: State<'_, ServerState>) -> Result<String, String> {
 pub fn run() {
   let app: tauri::App = tauri::Builder
     ::default()
+    .plugin(tauri_plugin_process::init())
     .plugin(tauri_plugin_updater::Builder::new().build())
     .manage(ServerState {
       port: Mutex::new(0),

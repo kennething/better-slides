@@ -1,5 +1,7 @@
 {
+  "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "updater-window",
+  "platforms": ["macOS", "windows", "linux"],
   "windows": ["update"],
-  "permissions": ["updater:default"]
+  "permissions": ["updater:allow-check", "updater:allow-download-and-install", "process:allow-restart"]
 }
