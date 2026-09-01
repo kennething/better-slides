@@ -42,7 +42,7 @@ import { check } from "@tauri-apps/plugin-updater";
 
 onMounted(() => document.documentElement.classList.add("bg-sky-200!", "dark:bg-sky-900!"));
 
-const update = ref<Awaited<ReturnType<typeof check>>>(null);
+const update = markRaw(shallowRef<Awaited<ReturnType<typeof check>>>(null));
 const isChecking = ref(true);
 const isInstalling = ref(false);
 const progress = ref(0);
@@ -91,6 +91,7 @@ async function installUpdate() {
 
     await relaunch();
   } catch (error) {
+    console.error(error);
     if (error instanceof Error) errorMessage.value = error.message ?? "couldnt install update. womp womp";
     else errorMessage.value = "couldnt install update. womp womp";
     isInstalling.value = false;
