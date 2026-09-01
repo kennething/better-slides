@@ -14,7 +14,12 @@ struct ServerState {
 const REMOTE_HTML: &str = include_str!("../static/remote.html");
 
 fn trigger_slide_action(action: &str) {
-  let mut enigo: Enigo = Enigo::new(&Settings::default()).expect("Failed to initialize Enigo");
+  let enigo: Result<Enigo, enigo::NewConError> = Enigo::new(&Settings::default());
+  if enigo.is_err() {
+    eprintln!("Failed to initialize Enigo: {:?}", enigo.err());
+    return;
+  }
+  let mut enigo: Enigo = enigo.unwrap();
 
   match action {
     "NEXT" => {
