@@ -1,7 +1,28 @@
-# Tauri + Vue + TypeScript
+<p align="center">
+  <img src="./public/logo.svg" alt="Better Slides Logo" width="100" height="100">
+</p>
+<h1 align="center">Better Slides</h1>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Don't have a clicker thing for your presentation? Just use your phone silly!
 
-## Recommended IDE Setup
+Better Slides runs a Socket.IO WebSocket server locally on your machine, and
+lets you connect to it from another device.
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Built with [Tauri](https://tauri.app/), the app has a tiny footprint and works
+on Windows and MacOS (Apple Silicon & Intel).
+
+## Installation
+
+1. Download the right installer for your system from the
+   [releases page](https://github.com/kennething/better-slides/releases/latest/).
+
+2. Ignore any warnings about the app being unsafe :shipit: (source: trust me
+   bro)
+
+   - On Windows, click "More Info" and then "Run Anyway"
+   - On MacOS, go to System Preferences > Privacy & Security, scroll down, and
+     click "Open Anyway"
+
+3. Enable any accessibility permissions the app asks for :shipit:
+
+   These are required for the app to function.
