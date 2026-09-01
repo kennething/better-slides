@@ -26,3 +26,8 @@ on Windows and MacOS (Apple Silicon & Intel).
 3. Enable any accessibility permissions the app asks for :shipit:
 
    These are required for the app to function.
+
+> \[!IMPORTANT\]
+>
+> Both the host and your other device must be on the same network, since the app
+> exposes a local WebSocket server.

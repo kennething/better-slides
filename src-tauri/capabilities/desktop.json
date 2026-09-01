@@ -3,5 +3,5 @@
   "identifier": "desktop-capability",
   "platforms": ["macOS", "windows", "linux"],
   "windows": ["main"],
-  "permissions": ["core:webview:allow-create-webview-window", "updater:allow-check"]
+  "permissions": ["core:webview:allow-create-webview-window", "core:window:allow-get-all-windows", "updater:allow-check"]
 }
