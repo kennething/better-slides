@@ -67,8 +67,8 @@ onMounted(async () => {
     new WebviewWindow("update", {
       url: "/update",
       title: `Update available: v${update.version}`,
-      width: 600,
-      height: 450,
+      width: 450,
+      height: 225,
       resizable: false,
       center: true
     });

@@ -16,20 +16,25 @@
     <h1 class="text-xl font-semibold">Update available :3</h1>
     <p class="text-sm text-center text-neutral-700 dark:text-neutral-300">Version {{ update.version }}</p>
 
-    <div class="my-4 pb-10" v-if="update.body">
-      <h1 class="text-lg font-semibold">What's new:</h1>
-      {{ update.body }}
-    </div>
+    <div class="flex items-center justify-center gap-4 mt-4">
+      <a v-if="release" class="bg-base-300 hover:bg-base-200 px-6 py-2 rounded-xl inline-flex items-center justify-center gap-2" :href="release.html_url" target="_blank" rel="noopener noreferrer">
+        <img src="/github.svg" class="size-6" aria-hidden="true" draggable="false" alt="" />
+        <p>Release Notes</p>
+      </a>
 
-    <div class="fixed select-none bottom-10 left-1/2 -translate-x-1/2">
-      <div v-if="!isInstalling" class="du-aura du-aura-sm du-aura-rainbow">
-        <button class="bg-base-200 hover:bg-base-300 px-6 py-2 rounded-xl" @click="installUpdate">Install v{{ update.version }}</button>
-      </div>
+      <div>
+        <div v-if="!isInstalling" class="du-aura du-aura-sm du-aura-rainbow">
+          <button class="bg-base-200 inline-flex items-center justify-center gap-2 hover:bg-base-100 px-6 py-2 rounded-xl" @click="installUpdate">
+            <img src="/download.svg" class="size-6" aria-hidden="true" draggable="false" alt="" />
+            <p>Install</p>
+          </button>
+        </div>
 
-      <div v-else class="flex items-center justify-center gap-2 mt-2">
-        <p class="shrink-0 font-light">{{ progress }}%</p>
-        <div class="w-60 h-4 rounded-full bg-base-content overflow-hidden relative">
-          <div class="h-full bg-sky-500 absolute top-0 left-0 transition duration-500" :style="{ width: `${progress}%` }"></div>
+        <div v-else class="flex items-center justify-center gap-2 mt-2">
+          <p class="shrink-0 font-light">{{ progress }}%</p>
+          <div class="w-60 h-4 rounded-full bg-base-content overflow-hidden relative">
+            <div class="h-full bg-sky-500 absolute top-0 left-0 transition duration-500" :style="{ width: `${progress}%` }"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -43,6 +48,7 @@ import { check } from "@tauri-apps/plugin-updater";
 onMounted(() => document.documentElement.classList.add("bg-sky-200!", "dark:bg-sky-900!"));
 
 const update = markRaw(shallowRef<Awaited<ReturnType<typeof check>>>(null));
+const release = ref<Release>();
 const isChecking = ref(true);
 const isInstalling = ref(false);
 const progress = ref(0);
@@ -55,8 +61,14 @@ onMounted(async () => {
       errorMessage.value = error.message ?? "couldnt check for updates. womp womp";
       return console.error(error);
     }
-
     update.value = updateResult;
+
+    const [releaseResult, error2] = await tryCatch<Release>(fetch("https://api.github.com/repos/kennething/better-slides/releases/latest").then((res) => res.json()));
+    if (error2) {
+      errorMessage.value = error2.message ?? "couldnt fetch release info. womp womp";
+      return console.error(error2);
+    }
+    release.value = releaseResult;
   } finally {
     isChecking.value = false;
   }
