@@ -45,7 +45,7 @@ onMounted(() => document.documentElement.classList.add("bg-sky-200!", "dark:bg-s
 const update = ref<Awaited<ReturnType<typeof check>>>(null);
 const isChecking = ref(true);
 const isInstalling = ref(false);
-const progress = ref(50);
+const progress = ref(0);
 const errorMessage = ref("");
 
 onMounted(async () => {
