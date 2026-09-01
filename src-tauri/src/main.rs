@@ -3,6 +3,6 @@
 
 fn main() {
   dotenvy::dotenv().ok();
-  
+
   tauri_app_lib::run()
 }

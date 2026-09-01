@@ -1,13 +1,11 @@
 use socketioxide::{ extract::{ Data, SocketRef }, SocketIo };
 use enigo::{ Direction, Enigo, Key, Keyboard, Settings };
-use axum::{ routing::get, response::Html, Router };
-use tauri::{ State, Manager, AppHandle, Emitter };
+use axum::{ response::Html, routing::get, Router };
+use tauri::{ AppHandle, Emitter, Manager, State };
 use tower_http::cors::CorsLayer;
 use local_ip_address::local_ip;
 use tokio::net::TcpListener;
 use std::sync::Mutex;
-
-pub mod update;
 
 struct ServerState {
   port: Mutex<u16>,
@@ -80,6 +78,7 @@ fn get_server_url(state: State<'_, ServerState>) -> Result<String, String> {
 pub fn run() {
   let app: tauri::App = tauri::Builder
     ::default()
+    .plugin(tauri_plugin_updater::Builder::new().build())
     .manage(ServerState {
       port: Mutex::new(0),
     })
@@ -91,13 +90,6 @@ pub fn run() {
   let start_server_handle: AppHandle = app.handle().clone();
   tauri::async_runtime::spawn(async move {
     start_server(start_server_handle).await;
-  });
-
-  let update_handle: AppHandle = app.handle().clone();
-  tauri::async_runtime::spawn(async move {
-    if let Err(err) = update::check_for_update(update_handle).await {
-      eprintln!("Update check failed: {err}");
-    }
   });
 
   app.run(|_, _| {});

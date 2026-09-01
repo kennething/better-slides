@@ -5,10 +5,14 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 jobs:
   release:
-    permissions:
-      contents: write
+    name: Release (${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -17,8 +21,6 @@ jobs:
             args: "--target universal-apple-darwin"
           - platform: "windows-latest"
             args: ""
-
-    runs-on: ${{ matrix.platform }}
 
     steps:
       - name: Checkout repository
@@ -50,11 +52,12 @@ jobs:
           sed -i.bak "s/^version = \".*\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
           rm -f src-tauri/Cargo.toml.bak
 
-      - name: Build Tauri app & Publish to GitHub Release
+      - name: Build and release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_VERSION: ${{ github.ref_name }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "${{ github.ref_name }}"
@@ -62,3 +65,5 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+          updaterJsonPreferNsis: true
+          updaterJsonKeepUniversal: true
